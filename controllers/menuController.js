@@ -29,7 +29,7 @@ exports.getAllMenus = async (req, res) => {
         console.error('Error fetching menus:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
-};
+}
 
 exports.getMenuDetails = async (req, res) => {
     try {
@@ -55,4 +55,29 @@ exports.getMenuDetails = async (req, res) => {
         console.error('Error fetching menu details:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
-};
+}
+
+exports.addItems = async(req,res)=>{
+    try {
+        const { itemName, description, amount, menu_id } = req.body;
+        console.log(itemName, description, amount, menu_id);
+        
+
+        if (!itemName || !description || !amount || !menu_id) {
+            return res.status(400).json({ error: 'All fields are required' });
+        }
+
+        const newItem = await Item.create({
+            menu_id:menu_id,
+            item_name:itemName,
+            item_description:description,
+            amount:amount
+        });
+
+        return res.status(201).json({ message: 'Item added successfully', item: newItem });
+
+    } catch (error) {
+        console.error('Error adding item:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+}

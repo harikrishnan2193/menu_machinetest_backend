@@ -9,7 +9,10 @@ router.post('/menu/addnew', menuController.addmenu)
 //get all menu
 router.get('/menu/getall', menuController.getAllMenus);
 
-//get meu items
+//get menu items
 router.get('/menu/:id', menuController.getMenuDetails);
+
+//add items 
+router.post('/menu/additems', menuController.addItems)
 
 module.exports = router
